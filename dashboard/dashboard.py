@@ -17,6 +17,15 @@ DATA_PATH = BASE_DIR / "student_mental_health_clean.csv"
 BURNOUT_MODEL_PATH = BASE_DIR / "burnout_model.keras"
 MENTAL_HEALTH_MODEL_PATH = BASE_DIR / "mental_health_model.keras"
 SCALER_PATH = BASE_DIR / "scaler.save"
+
+st.write("BASE_DIR:", BASE_DIR)
+st.write("DATA_PATH:", DATA_PATH)
+st.write("DATA_PATH exists:", DATA_PATH.exists())
+st.write("Files in dashboard folder:", [p.name for p in BASE_DIR.iterdir()])
+
+if not DATA_PATH.exists():
+    st.error("File CSV tidak ditemukan. Cek apakah file sudah benar-benar ada di folder dashboard pada GitHub/Streamlit Cloud.")
+    st.stop()
 #Load dataset
 df = pd.read_csv(DATA_PATH)
 
