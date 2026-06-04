@@ -6,19 +6,26 @@ import plotly.express as px
 import joblib
 import os
 from tensorflow.keras.models import load_model
+from pathlib import Path
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
+BASE_DIR = Path(__file__).resolve().parent
+
+DATA_PATH = BASE_DIR / "student_mental_health_clean.csv"
+BURNOUT_MODEL_PATH = BASE_DIR / "burnout_model.keras"
+MENTAL_HEALTH_MODEL_PATH = BASE_DIR / "mental_health_model.keras"
+SCALER_PATH = BASE_DIR / "scaler.save"
 #Load dataset
-df = pd.read_csv("student_mental_health_clean.csv")
+df = pd.read_csv(DATA_PATH)
 
 # Load Model
 @st.cache_resource
 def load_model_assets():
-    burnout_model = load_model("burnout_model.keras")
-    mental_health_model = load_model("mental_health_model.keras")
-    scaler = joblib.load("scaler.save")
+    burnout_model = load_model(BURNOUT_MODEL_PATH)
+    mental_health_model = load_model(MENTAL_HEALTH_MODEL_PATH)
+    scaler = joblib.load(SCALER_PATH)
     return burnout_model, mental_health_model, scaler
 
 burnout_model, mental_health_model, scaler = load_model_assets()
