@@ -29,7 +29,8 @@ if DATA_PATH.exists():
     df = pd.read_csv(DATA_PATH) 
     st.write("Dataset shape:", df.shape) 
 else: 
-    st.error("File student_mental_health_clean.csv tidak ditemukan di folder dashboard pada Streamlit Cloud.") st.stop()
+    st.error("File student_mental_health_clean.csv tidak ditemukan di folder dashboard pada Streamlit Cloud.") 
+    st.stop()
 # Load Model
 @st.cache_resource
 def load_model_assets():
