@@ -21,6 +21,7 @@ SCALER_PATH = BASE_DIR / "scaler.save"
 st.write("BASE_DIR:", BASE_DIR)
 st.write("DATA_PATH:", DATA_PATH)
 st.write("DATA_PATH exists:", DATA_PATH.exists())
+st.write("DATA_PATH size:", DATA_PATH.stat().st_size, "bytes")
 st.write("Files in dashboard folder:", [p.name for p in BASE_DIR.iterdir()])
 
 if not DATA_PATH.exists():
