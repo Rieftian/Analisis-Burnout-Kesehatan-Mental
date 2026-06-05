@@ -18,9 +18,15 @@ BURNOUT_MODEL_PATH = BASE_DIR / "burnout_model.keras"
 MENTAL_HEALTH_MODEL_PATH = BASE_DIR / "mental_health_model.keras"
 SCALER_PATH = BASE_DIR / "scaler.save"
 
+st.write("BASE_DIR:", BASE_DIR)
+st.write("DATA_PATH:", DATA_PATH) 
+st.write("DATA_PATH exists:", DATA_PATH.exists())
+
 
 if DATA_PATH.exists(): 
+    st.write("DATA_PATH size:", DATA_PATH.stat().st_size, "bytes")
     df = pd.read_csv(DATA_PATH) 
+    st.write("Dataset shape:", df.shape)
 else: 
     st.error("File student_mental_health_clean.csv tidak ditemukan di folder dashboard pada Streamlit Cloud.") 
     st.stop()
