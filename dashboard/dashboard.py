@@ -25,9 +25,7 @@ st.write(f"DATA_PATH exists: {DATA_PATH.exists()}")
 
 
 if DATA_PATH.exists(): 
-    st.write("DATA_PATH size:", DATA_PATH.stat().st_size, "bytes")
     df = pd.read_csv(DATA_PATH) 
-    st.write("Dataset shape:", df.shape)
 else: 
     st.error("File student_mental_health_clean.csv tidak ditemukan di folder dashboard pada Streamlit Cloud.") 
     st.stop()
