@@ -18,8 +18,7 @@ BURNOUT_MODEL_PATH = BASE_DIR / "burnout_model.keras"
 MENTAL_HEALTH_MODEL_PATH = BASE_DIR / "mental_health_model.keras"
 SCALER_PATH = BASE_DIR / "scaler.save"
 
-st.write("BASE_DIR:", BASE_DIR)
-st.write("DATA_PATH:", DATA_PATH) 
+
 st.write("DATA_PATH exists:", DATA_PATH.exists())
 
 
