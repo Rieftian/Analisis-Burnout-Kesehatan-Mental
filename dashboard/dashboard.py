@@ -18,30 +18,39 @@ BURNOUT_MODEL_PATH = BASE_DIR / "burnout_model.keras"
 MENTAL_HEALTH_MODEL_PATH = BASE_DIR / "mental_health_model.keras"
 SCALER_PATH = BASE_DIR / "scaler.save"
 
-st.write("BASE_DIR:", BASE_DIR)
-st.write("DATA_PATH:", DATA_PATH)
-st.write("DATA_PATH exists:", DATA_PATH.exists())
-st.write("Files in dashboard folder:", [p.name for p in BASE_DIR.iterdir()])
 
-if DATA_PATH.exists():
-    st.write("DATA_PATH size:", DATA_PATH.stat().st_size, "bytes")
-    df = pd.read_csv(DATA_PATH)
-    st.write("Dataset shape:", df.shape)
-else:
-    st.error("File student_mental_health_clean.csv tidak ditemukan di folder dashboard pada Streamlit Cloud.")
-    st.stop()
+@st.cache_data
+def load_dataset():
+    if not DATA_PATH.exists():
+        st.error(f"Dataset tidak ditemukan di: {DATA_PATH}")
+        st.stop()
 
-#Load dataset
-df = pd.read_csv(DATA_PATH)
-
-# Load Model
+    return pd.read_csv(DATA_PATH)
+    
 @st.cache_resource
 def load_model_assets():
+    if not BURNOUT_MODEL_PATH.exists():
+        st.error(f"Model burnout tidak ditemukan di: {BURNOUT_MODEL_PATH}")
+        st.stop()
+
+    if not MENTAL_HEALTH_MODEL_PATH.exists():
+        st.error(f"Model mental health tidak ditemukan di: {MENTAL_HEALTH_MODEL_PATH}")
+        st.stop()
+
+    if not SCALER_PATH.exists():
+        st.error(f"Scaler tidak ditemukan di: {SCALER_PATH}")
+        st.stop()
+        
     burnout_model = load_model(BURNOUT_MODEL_PATH)
     mental_health_model = load_model(MENTAL_HEALTH_MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
-    return burnout_model, mental_health_model, scaler
 
+    return burnout_model, mental_health_model, scaler
+    
+#Load dataset
+df = load_dataset()
+
+# Load Model
 burnout_model, mental_health_model, scaler = load_model_assets()
 
 # Membuat fungsi visualisasi
